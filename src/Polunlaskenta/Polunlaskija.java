@@ -1,0 +1,153 @@
+package Polunlaskenta;
+
+import Ruudukko.Liikkuja.Koordinaatti;
+import Ruudukko.Liikkuja.Liikkuja;
+import Ruudukko.Node;
+import Ruudukko.Ruudukko;
+
+public class Polunlaskija {
+
+    private Liikkuja liikkuja;
+    private Ruudukko ruudukko;
+    private Koordinaatti kohde;
+    private Node[][] nodet;
+
+    public Polunlaskija(Liikkuja liikkuja, Ruudukko ruudukko) {
+        this.liikkuja = liikkuja;
+        this.ruudukko = ruudukko;
+        this.kohde = null;
+        this.nodet = new Node[ruudukko.getRuudukonKorkeus()][ruudukko.getRuudukonLeveys()];
+    }
+
+    public void asetaKohdeAstar(Koordinaatti kohde) {
+        this.kohde = kohde;
+//          KÄSITELLÄÄN SETTEJÄ NODEJEN OMINAISUUKSINA, enum, YKSINKERTAISEMPAA
+//        Node[] closedset = new Node[ruudukko.getRuudukonKorkeus() * ruudukko.getRuudukonLeveys()];
+//        Node[] openset = new Node[ruudukko.getRuudukonKorkeus() * ruudukko.getRuudukonLeveys()];
+//        this.omaruudukko = new Node[ruudukko.getRuudukonKorkeus()][ruudukko.getRuudukonLeveys()];
+//        
+        int g = 0;
+        int f = 0 + this.manhattanEtaisyys(liikkuja.getSijainti(), kohde);
+
+        // laitetaan liikkujan alkunode opensettiin
+        nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()].setOpen();
+        
+        //  while openset is not empty
+        while (!opensetTyhja()) {
+            Node current = this.matalinFScore();
+            
+            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    
+    private Node matalinFScore() {
+        Node matalin = null;
+        int matalimmanFScore = 999999;
+        
+        for (int y = 0; y < nodet.length; y++) {
+            for (int x = 0; x < nodet.length; x++) {
+                
+                
+                
+                
+            }
+        }
+        
+        return null;
+    }
+    
+
+    private boolean opensetTyhja() {
+        for (Node[] nodes : nodet) {
+            for (Node node : nodes) {
+                if (node.isOpen()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    testiviritelmä alla
+    public void asetaKohde(Koordinaatti kohde) {
+        this.kohde = kohde;
+
+        liikkuja.getPath().tyhjenna();
+
+        // Lasketaan lyhin polku liikkujalle
+
+        // testiksi simppeli liikkuminen ensin y-akselilla sitten x-akselilla
+
+        int kuinkaMontaRuutuaYlospain = 0;
+        int kuinkaMontaRuutuaAlaspain = 0;
+        // y-akseli
+        if (liikkuja.getSijainti().getY() > kohde.getY()) {
+            kuinkaMontaRuutuaYlospain = liikkuja.getSijainti().getY() - kohde.getY();
+
+            for (int i = 1; i <= kuinkaMontaRuutuaYlospain; i++) {
+                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX(), liikkuja.getSijainti().getY() - i));
+            }
+
+        } else if (liikkuja.getSijainti().getY() < kohde.getY()) {
+            kuinkaMontaRuutuaAlaspain = kohde.getY() - liikkuja.getSijainti().getY();
+
+
+            for (int i = 1; i <= kuinkaMontaRuutuaAlaspain; i++) {
+                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX(), liikkuja.getSijainti().getY() + i));
+            }
+        }
+
+        int ySuunnanLiikkuminen = kuinkaMontaRuutuaAlaspain - kuinkaMontaRuutuaYlospain;
+
+        // x-akseli copypastella
+
+        if (liikkuja.getSijainti().getX() > kohde.getX()) {
+            int kuinkaMontaRuutuaVasemmalle = liikkuja.getSijainti().getX() - kohde.getX();
+
+            for (int i = 1; i <= kuinkaMontaRuutuaVasemmalle; i++) {
+                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX() - i, liikkuja.getSijainti().getY() + ySuunnanLiikkuminen));
+            }
+
+        } else if (liikkuja.getSijainti().getX() < kohde.getX()) {
+            int kuinkaMontaRuutuaOikealle = kohde.getX() - liikkuja.getSijainti().getX();
+
+
+            for (int i = 1; i <= kuinkaMontaRuutuaOikealle; i++) {
+                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX() + i, liikkuja.getSijainti().getY() + ySuunnanLiikkuminen));
+            }
+        }
+    }
+
+    public int manhattanEtaisyys(Koordinaatti a, Koordinaatti b) {
+        int etaisyys;
+
+        etaisyys = Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
+
+        return etaisyys;
+    }
+
+    
+}
