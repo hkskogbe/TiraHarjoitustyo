@@ -65,9 +65,11 @@ public class Polunlaskija {
             for (int x = 0; x < nodet.length; x++) {
                 
                 if (this.laskeFScore(nodet[y][x], new Koordinaatti(x,y)) >= matalimmanFScore) {
-                    matalin=nodet[y][x];
-		    matalimmanFScore=this.laskeFScore(nodet[y][x], new Koordinaatti(x,y));
-                }                       
+                    this.matalin=nodet[y][x];
+		    this.matalimmanFScore=this.laskeFScore(nodet[y][x], new Koordinaatti(x,y));
+                }
+                
+                
             }
         }
         
