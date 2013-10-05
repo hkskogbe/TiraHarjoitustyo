@@ -2,15 +2,20 @@
 import Grafiikka.Grafiikka;
 import Ruudukko.Liikkuja.Koordinaatti;
 import Ruudukko.Liikkuja.Liikkuja;
+import Ruudukko.Node;
 import Ruudukko.Paivittaja;
 import Ruudukko.Ruudukko;
 import Tietorakenteita.KoordinaattiJono;
+import Tietorakenteita.NodeHeap;
 import java.awt.Color;
 import javax.swing.SwingUtilities;
 
 public class main {
 
     public static void main(String[] args) {
+
+       
+
 
         String ruudukkoString;
 

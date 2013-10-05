@@ -2,10 +2,11 @@ package Ruudukko;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * Päivittää ruudukon graafista esitystä.
+ */
 public class Paivittaja {
-
-    // ONCE EVERY SECOND, EVERYTHING SHALL BE UPDATED. maybe once 0.7 seconds, maybe
+    
     private Ruudukko ruudukko;
 
     public Paivittaja(Ruudukko ruudukko) {
@@ -16,7 +17,7 @@ public class Paivittaja {
         try {
             while (true) {
                 
-                Thread.sleep(1000);
+                Thread.sleep(200);
                 
                 if (this.ruudukko.voiLiikkua()) {
                     this.ruudukko.liiku();

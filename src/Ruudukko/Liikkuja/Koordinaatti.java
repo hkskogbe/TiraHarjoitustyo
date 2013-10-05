@@ -17,4 +17,8 @@ public class Koordinaatti {
     public int getY() {
         return y;
     }
+    @Override
+    public String toString(){
+        return "Koordinaatti: " + x + ", " + y;
+    }
 }

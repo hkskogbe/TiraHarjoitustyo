@@ -8,6 +8,7 @@ import java.awt.Color;
 public class Liikkuja {
 
     private Koordinaatti sijainti;
+    private Koordinaatti kohde;
     private KoordinaattiJono path;
     private Color vari;
     private Polunlaskija polunlaskija;
@@ -16,6 +17,7 @@ public class Liikkuja {
         this.vari = vari;
         this.sijainti = new Koordinaatti(sijaintiX, sijaintiY);
         this.polunlaskija = new Polunlaskija(this, ruudukko);
+        this.kohde = null;
     }
 
     public void setPath(KoordinaattiJono path) {
@@ -51,6 +53,17 @@ public class Liikkuja {
     }
 
     public void vaihdaKohteeksi(Koordinaatti koordinaatti) {
-        this.polunlaskija.asetaKohde(koordinaatti);
+        this.kohde = koordinaatti;
+        this.laskeReitti(koordinaatti);
+    }
+
+    public void laskeReittiUudelleen() {
+        if (kohde != null) {
+            this.laskeReitti(kohde);
+        }
+    }
+
+    private void laskeReitti(Koordinaatti k) {
+        this.polunlaskija.asetaKohdeAstar(k);
     }
 }

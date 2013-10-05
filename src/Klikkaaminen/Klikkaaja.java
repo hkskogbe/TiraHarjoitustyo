@@ -21,7 +21,6 @@ public class Klikkaaja implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
 
-
         int ruudukonY = 0;
         int ruudukonX = 0;
 
@@ -37,28 +36,21 @@ public class Klikkaaja implements MouseListener {
             }
             ruudukko.repaint();
         }
-
-
     }
 
     private void noModPress(MouseEvent e, int ruutuX, int ruutuY) {
-        // jos ei modifieria, laitetaan koordinaatti liikkujalle pathiin näin 
-        // aluksi, jos koordinaatti ei osoita seinään
-
         if (!ruudukko.onSeina(ruutuY, ruutuX)) {
-            ruudukko.getLiikkuja().vaihdaKohteeksi(new Koordinaatti(ruutuX,ruutuY));
-//            ruudukko.getLiikkuja().lisaaPathiin(new Koordinaatti(ruutuX, ruutuY));
+            ruudukko.getLiikkuja().vaihdaKohteeksi(new Koordinaatti(ruutuX, ruutuY));
         }
     }
 
     private void shiftPress(MouseEvent e, int ruutuX, int ruutuY) {
-        // SEINIEN POISTAMINEN/LISÄÄMINEN
+        // Lisää/poistaa esteen
         ruudukko.vaihdaNodenKaveltavyys(ruutuY, ruutuX);
+        ruudukko.getLiikkuja().laskeReittiUudelleen();
     }
 
     // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä tyhjää
-    // TOISTAISEKSI EI KOVIN DYNAAMINEN RATKAISU, 
-    // LASKE TARKEMMIN JA PÄIVITÄ MUUTTUVAT ARVOT
     private int haeX(MouseEvent e, int ruudukonX) {
         int x = e.getX() - 3;
         int ruutuX = -1;

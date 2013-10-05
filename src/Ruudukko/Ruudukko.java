@@ -19,6 +19,9 @@ public class Ruudukko extends JPanel {
     private boolean[][] ruudukko;
     private Liikkuja liikkuja;
 
+    /**
+     * Konstruktori ruudukolle stringin pohjalta
+     */
     public Ruudukko(int korkeus, int leveys, int ruudunKorkeus, int ruudunLeveys,
             int vali, Color taustavari, String ruudukkoString) {
 
@@ -34,6 +37,24 @@ public class Ruudukko extends JPanel {
         this.seinavari = Color.MAGENTA;
     }
 
+    /**
+     * Tyhjän ruudukon konstruktori
+     */
+    public Ruudukko(int korkeus, int leveys, int ruudunKorkeus, int ruudunLeveys,
+            int vali, Color taustavari) {
+
+        this.korkeus = korkeus;
+        this.leveys = leveys;
+        this.ruudunKorkeus = ruudunKorkeus;
+        this.ruudunLeveys = ruudunLeveys;
+        this.vali = vali;
+        this.taustavari = taustavari;
+        this.ruudukko = new boolean[korkeus][leveys];
+
+        this.tyhjavari = Color.LIGHT_GRAY;
+        this.seinavari = Color.MAGENTA;
+    }
+
     public void setLiikkuja(Liikkuja liikkuja) {
         this.liikkuja = liikkuja;
     }
@@ -42,6 +63,9 @@ public class Ruudukko extends JPanel {
         return liikkuja;
     }
 
+    /**
+     * Tieto siitä, voiko liikkuja edetä.
+     */
     public boolean voiLiikkua() {
         if (this.liikkuja.getPath().isEmpty()) {
             return false;
@@ -49,6 +73,9 @@ public class Ruudukko extends JPanel {
         return true;
     }
 
+    /**
+     * Siirtää liikkujan seuraavaan ruutuun.
+     */
     public void liiku() {
         this.liikkuja.liiku();
     }
@@ -61,7 +88,6 @@ public class Ruudukko extends JPanel {
     private void kasaaRuudukko(String ruudukkoString) {
         this.ruudukko = new boolean[korkeus][leveys];
 
-//        ruudukkoString = ruudukkoString.trim();
 
         int y = 0;
         int x = 0;
@@ -92,6 +118,13 @@ public class Ruudukko extends JPanel {
         return this.ruudukko[y][x];
     }
 
+    /**
+     * Jos node on käveltävä, se ei ole enää. Jos se ei taas ole, siitä tulee
+     * käveltävä. :)
+     *
+     * @param y
+     * @param x
+     */
     public void vaihdaNodenKaveltavyys(int y, int x) {
         if (y == liikkuja.getSijainti().getY() && x == liikkuja.getSijainti().getX()) {
             return;
@@ -118,18 +151,16 @@ public class Ruudukko extends JPanel {
                 } else {
                     graphics.setColor(this.tyhjavari);
                 }
-
                 piirraNelio(graphics, i, j);
-
             }
         }
 
         if (liikkuja != null) {
-            piirraLiikkuja(graphics);
-
             if (!liikkuja.getPath().isEmpty()) {
                 piirraLiikkujanPolku(graphics);
             }
+
+            piirraLiikkuja(graphics);
         }
     }
 
@@ -140,6 +171,7 @@ public class Ruudukko extends JPanel {
 
     private void piirraLiikkujanPolku(Graphics graphics) {
         graphics.setColor(Color.WHITE);
+
 
         for (Koordinaatti k : liikkuja.getPath().getKoordinaatit()) {
             if (k != null) {

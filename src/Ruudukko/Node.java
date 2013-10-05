@@ -1,10 +1,13 @@
 package Ruudukko;
 
+import Ruudukko.Liikkuja.Koordinaatti;
+
 public class Node {
 
-    private Node parent;
-    private NodeSet tyyppi;
-    
+    private Koordinaatti parent;
+    private Koordinaatti koordinaatti;
+    private boolean closed;
+    private boolean open;
     private int gScore;
 
     public void setgScore(int gScore) {
@@ -15,55 +18,37 @@ public class Node {
         return gScore;
     }
 
-
-    public Node() {
+    public Node(Koordinaatti k) {
         this.parent = null;
-        this.tyyppi = NodeSet.NONE;
+        this.koordinaatti = k;
+        this.closed=false;
+        this.open=false;
         this.gScore = Integer.MAX_VALUE;
     }
 
     public void setClosed() {
-        this.tyyppi = NodeSet.CLOSED;
-    }
-
-    public void setOpen() {
-        this.tyyppi = NodeSet.OPEN;
-    }
-
-    public void setNone() {
-        this.tyyppi = NodeSet.NONE;
-    }
-
-    public NodeSet getTyyppi() {
-        return tyyppi;
+        this.closed=true;
+        this.open=false;
     }
 
     public boolean isClosed() {
-        if (this.tyyppi == NodeSet.CLOSED) {
-            return true;
-        }
-        return false;
+        return closed;
     }
 
     public boolean isOpen() {
-        if (this.tyyppi == NodeSet.OPEN) {
-            return true;
-        }
-        return false;
+        return open;
     }
 
-    public boolean isNotInSet() {
-        if (this.tyyppi == NodeSet.NONE) {
-            return true;
-        }
-        return false;
-    }
 
-    public void setParent(Node parent) {
+    public void setParent(Koordinaatti parent) {
         this.parent = parent;
     }
 
-    public Node getParent() {
+    public Koordinaatti getParent() {
         return parent;
+    }
+
+    public Koordinaatti getKoordinaatti() {
+        return koordinaatti;
     }
 }

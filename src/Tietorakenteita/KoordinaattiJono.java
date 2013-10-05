@@ -1,7 +1,6 @@
 package Tietorakenteita;
 
 import Ruudukko.Liikkuja.Koordinaatti;
-import java.util.Iterator;
 
 public class KoordinaattiJono {
 
@@ -34,6 +33,7 @@ public class KoordinaattiJono {
         }
 
         Koordinaatti palautettava = this.taulukko[jononAlkupaa];
+        this.taulukko[jononAlkupaa]=null;
 
         jononAlkupaa++;
         if (jononAlkupaa > taulukko.length) {
@@ -57,20 +57,7 @@ public class KoordinaattiJono {
     }
 
     public Koordinaatti[] getKoordinaatit() {
-        Koordinaatti[] palautettava = new Koordinaatti[taulukko.length];
-
-        int i = 0;
-        int indeksiJonossa = jononAlkupaa;
-
-        while (indeksiJonossa != jononLoppupaa) {
-            palautettava[i] = taulukko[indeksiJonossa];
-
-            indeksiJonossa++;
-            if (indeksiJonossa > taulukko.length) {
-                indeksiJonossa = 0;
-            }
-        }
-        return palautettava;
+        return this.taulukko;
     }
     
     public void tyhjenna() {

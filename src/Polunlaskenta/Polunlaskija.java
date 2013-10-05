@@ -4,6 +4,9 @@ import Ruudukko.Liikkuja.Koordinaatti;
 import Ruudukko.Liikkuja.Liikkuja;
 import Ruudukko.Node;
 import Ruudukko.Ruudukko;
+import Tietorakenteita.KoordinaattiJono;
+import Tietorakenteita.KoordinaattiPino;
+import Tietorakenteita.NodeHeap;
 
 public class Polunlaskija {
 
@@ -11,141 +14,145 @@ public class Polunlaskija {
     private Ruudukko ruudukko;
     private Koordinaatti kohde;
     private Node[][] nodet;
+    private int naapurienEtaisyys;
+    private NodeHeap openset;
 
     public Polunlaskija(Liikkuja liikkuja, Ruudukko ruudukko) {
         this.liikkuja = liikkuja;
         this.ruudukko = ruudukko;
         this.kohde = null;
         this.nodet = new Node[ruudukko.getRuudukonKorkeus()][ruudukko.getRuudukonLeveys()];
+        this.naapurienEtaisyys = 1;
     }
 
     public void asetaKohdeAstar(Koordinaatti kohde) {
-        this.kohde = kohde;
-//          KÄSITELLÄÄN SETTEJÄ NODEJEN OMINAISUUKSINA, enum, YKSINKERTAISEMPAA
-//        Node[] closedset = new Node[ruudukko.getRuudukonKorkeus() * ruudukko.getRuudukonLeveys()];
-//        Node[] openset = new Node[ruudukko.getRuudukonKorkeus() * ruudukko.getRuudukonLeveys()];
-//        this.omaruudukko = new Node[ruudukko.getRuudukonKorkeus()][ruudukko.getRuudukonLeveys()];
-//        
-        int g = 0;
-        int f = 0 + this.manhattanEtaisyys(liikkuja.getSijainti(), kohde);
-
-        // laitetaan liikkujan alkunode opensettiin
-        nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()].setOpen();
-        
-        //  while openset is not empty
-        while (!opensetTyhja()) {
-            Node current = this.matalinFScore();
-            
-            
-            
-            
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-    
-    private Node matalinFScore() {
-        Node matalin = null;
-        int matalimmanFScore = 999999;
-        
+        // Alustetaan nodet
         for (int y = 0; y < nodet.length; y++) {
-            for (int x = 0; x < nodet.length; x++) {
-                
-                if (this.laskeFScore(nodet[y][x], new Koordinaatti(x,y)) >= matalimmanFScore) {
-                    matalin=nodet[y][x];
-		    matalimmanFScore=this.laskeFScore(nodet[y][x], new Koordinaatti(x,y));
-                }                       
+            for (int x = 0; x < nodet[0].length; x++) {
+                nodet[y][x] = new Node(new Koordinaatti(x, y));
             }
         }
-        
-        return matalin;
-    }
-    private int laskeFScore(Node n, Koordinaatti k) {
-        return n.getgScore() + this.manhattanEtaisyys(k, this.kohde);        
-    }
 
-    private boolean opensetTyhja() {
-        for (Node[] nodes : nodet) {
-            for (Node node : nodes) {
-                if (node.isOpen()) {
-                    return false;
+        this.kohde = kohde;
+        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus()+1) * (ruudukko.getRuudukonLeveys()+1), kohde);
+
+        // Laitetaan liikkujan alkunode opensettiin
+        openset.insert(nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()]);
+
+        while (!openset.isEmpty()) {
+
+            Node current = openset.delMin();
+
+            // Jos current == kohde rakennetaan polku ja lopetetaan while-loop
+            if (current == nodet[kohde.getY()][kohde.getX()]) {
+                this.rakennaPolku();
+                break;
+            }
+
+            current.setClosed();
+
+            // Tarkastellaan currentin naapurinodeja
+
+            Node naapuri;
+
+            int currentY = current.getKoordinaatti().getY();
+            int currentX = current.getKoordinaatti().getX();
+
+            //ylös
+            if (currentY > 0) {
+                if (!ruudukko.onSeina(currentY - 1, currentX)) {
+                    naapuri = nodet[currentY - 1][currentX];
+                    this.tarkasteleNaapuria(naapuri, current);
                 }
             }
+            //oikea
+            if (currentX < this.ruudukko.getRuudukonLeveys() - 1) {
+                if (!ruudukko.onSeina(currentY, currentX + 1)) {
+                    naapuri = nodet[currentY][currentX + 1];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+            //alas
+            if (currentY < this.ruudukko.getRuudukonKorkeus() - 1) {
+                if (!ruudukko.onSeina(currentY + 1, currentX)) {
+                    naapuri = nodet[currentY + 1][currentX];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+            //vasen
+            if (currentX > 0) {
+                if (!ruudukko.onSeina(currentY, currentX - 1)) {
+                    naapuri = nodet[currentY][currentX - 1];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+
+
+        }
+        // Jos päästään tähän niin kohdetta ei voi asettaa
+    }
+
+    private void tarkasteleNaapuria(Node naapuri, Node current) {
+        int alustavaGScore = current.getgScore() + this.naapurienEtaisyys;
+
+        if (naapuri.isClosed() && alustavaGScore >= naapuri.getgScore()) {
+            // Naapuria ei käsitellä
+        } else {
+            naapuri.setParent(current.getKoordinaatti());
+            naapuri.setgScore(alustavaGScore);
+            if (!naapuri.isOpen()) {
+                openset.insert(naapuri);
+            }
+        }
+    }
+
+    private void rakennaPolku() {
+        int polunPituus = 1;
+        Koordinaatti vika = kohde;
+        Koordinaatti eka = liikkuja.getSijainti();
+        Koordinaatti nyt = vika;
+
+        // Lasketaan ensin polun pituus
+        while (!samat(eka, nyt)) {
+            nyt = nodet[nyt.getY()][nyt.getX()].getParent();
+            polunPituus++;
+        }
+
+        // Koordinaatit pinoon, jonka avulla ne käännetään jonoksi liikkujalle
+        KoordinaattiPino kaantaja = new KoordinaattiPino(polunPituus);
+        nyt = vika;
+
+        while (!samat(eka, nyt)) {
+            kaantaja.lisaa(nyt);
+            nyt = nodet[nyt.getY()][nyt.getX()].getParent();
+        }
+        kaantaja.lisaa(eka);
+
+        KoordinaattiJono jono = new KoordinaattiJono(polunPituus);
+
+        while (!kaantaja.isTyhja()) {
+            jono.add(kaantaja.pop());
+        }
+
+        liikkuja.setPath(jono);
+    }
+
+    /**
+     * Tarkistaa kahden koordinaatin yhtäsuuruuden
+     */
+    private boolean samat(Koordinaatti a, Koordinaatti b) {
+        if (a.getX() != b.getX()) {
+            return false;
+        }
+        if (a.getY() != b.getY()) {
+            return false;
         }
         return true;
     }
 
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    testiviritelmä alla
-    public void asetaKohde(Koordinaatti kohde) {
-        this.kohde = kohde;
-
-        liikkuja.getPath().tyhjenna();
-
-        // Lasketaan lyhin polku liikkujalle
-
-        // testiksi simppeli liikkuminen ensin y-akselilla sitten x-akselilla
-
-        int kuinkaMontaRuutuaYlospain = 0;
-        int kuinkaMontaRuutuaAlaspain = 0;
-        // y-akseli
-        if (liikkuja.getSijainti().getY() > kohde.getY()) {
-            kuinkaMontaRuutuaYlospain = liikkuja.getSijainti().getY() - kohde.getY();
-
-            for (int i = 1; i <= kuinkaMontaRuutuaYlospain; i++) {
-                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX(), liikkuja.getSijainti().getY() - i));
-            }
-
-        } else if (liikkuja.getSijainti().getY() < kohde.getY()) {
-            kuinkaMontaRuutuaAlaspain = kohde.getY() - liikkuja.getSijainti().getY();
-
-
-            for (int i = 1; i <= kuinkaMontaRuutuaAlaspain; i++) {
-                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX(), liikkuja.getSijainti().getY() + i));
-            }
-        }
-
-        int ySuunnanLiikkuminen = kuinkaMontaRuutuaAlaspain - kuinkaMontaRuutuaYlospain;
-
-        // x-akseli copypastella
-
-        if (liikkuja.getSijainti().getX() > kohde.getX()) {
-            int kuinkaMontaRuutuaVasemmalle = liikkuja.getSijainti().getX() - kohde.getX();
-
-            for (int i = 1; i <= kuinkaMontaRuutuaVasemmalle; i++) {
-                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX() - i, liikkuja.getSijainti().getY() + ySuunnanLiikkuminen));
-            }
-
-        } else if (liikkuja.getSijainti().getX() < kohde.getX()) {
-            int kuinkaMontaRuutuaOikealle = kohde.getX() - liikkuja.getSijainti().getX();
-
-
-            for (int i = 1; i <= kuinkaMontaRuutuaOikealle; i++) {
-                liikkuja.lisaaPathiin(new Koordinaatti(liikkuja.getSijainti().getX() + i, liikkuja.getSijainti().getY() + ySuunnanLiikkuminen));
-            }
-        }
-    }
-
+    /**
+     * Metodi manhattan-etäisyyden laskemiseen algoritmin etäisyysarviota varten
+     */
     public int manhattanEtaisyys(Koordinaatti a, Koordinaatti b) {
         int etaisyys;
 
@@ -153,8 +160,4 @@ public class Polunlaskija {
 
         return etaisyys;
     }
-
-    
-
-    
 }
