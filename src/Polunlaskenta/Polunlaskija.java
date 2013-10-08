@@ -34,19 +34,21 @@ public class Polunlaskija {
         }
 
         this.kohde = kohde;
-        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus()+1) * (ruudukko.getRuudukonLeveys()+1), kohde);
+        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus() + 1) * (ruudukko.getRuudukonLeveys() + 1), kohde);
 
         // Laitetaan liikkujan alkunode opensettiin
         openset.insert(nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()]);
 
+        Node current = null;
+
         while (!openset.isEmpty()) {
 
-            Node current = openset.delMin();
+            current = openset.delMin();
 
             // Jos current == kohde rakennetaan polku ja lopetetaan while-loop
             if (current == nodet[kohde.getY()][kohde.getX()]) {
                 this.rakennaPolku();
-                break;
+                return;
             }
 
             current.setClosed();
@@ -90,6 +92,9 @@ public class Polunlaskija {
 
         }
         // Jos päästään tähän niin kohdetta ei voi asettaa
+        // Pysäytetään liikkuja
+        liikkuja.setPath(new KoordinaattiJono(0));
+
     }
 
     private void tarkasteleNaapuria(Node naapuri, Node current) {

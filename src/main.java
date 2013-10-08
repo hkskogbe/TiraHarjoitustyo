@@ -8,42 +8,51 @@ import Ruudukko.Ruudukko;
 import Tietorakenteita.KoordinaattiJono;
 import Tietorakenteita.NodeHeap;
 import java.awt.Color;
+import java.util.Random;
 import javax.swing.SwingUtilities;
 
 public class main {
 
     public static void main(String[] args) {
 
+        
        
 
+        Random rng = new Random();
+        StringBuilder ruudukkoString;
 
-        String ruudukkoString;
+        ruudukkoString = new StringBuilder(" ");
+        for (int i = 0; i < 50*60-1; i++) {
+            if (rng.nextDouble()<0.3){
+                ruudukkoString.append('x');
+            } else {
+                ruudukkoString.append(" ");
+            }
+        }
+// Alla viritelmä oman ruudukon piirtelyyn, testailin tällä
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            "
+//                + "            ";
 
-        ruudukkoString = ""
-                + "            "
-                + "            "
-                + "   xxx      "
-                + "      xx    "
-                + "         x  "
-                + "         x  "
-                + "         x  "
-                + "         x  "
-                + "         x  "
-                + "            ";
+        Ruudukko r = new Ruudukko(50, 60, 10, 10, 1, Color.DARK_GRAY, ruudukkoString.toString());
+        Liikkuja liikkuja = new Liikkuja(Color.CYAN, 0, 0, r);
+        r.setLiikkuja(liikkuja);
 
-        Ruudukko r = new Ruudukko(10, 12, 50, 50, 5, Color.DARK_GRAY, ruudukkoString);
-        Liikkuja ligu = new Liikkuja(Color.ORANGE, 0, 1, r);
-        r.setLiikkuja(ligu);
+        KoordinaattiJono matka = new KoordinaattiJono(300);
+//        matka.add(new Koordinaatti(0, 2));
+//        matka.add(new Koordinaatti(0, 3));
+//        matka.add(new Koordinaatti(1, 3));
+//        matka.add(new Koordinaatti(1, 4));
+        liikkuja.setPath(matka);
 
-        KoordinaattiJono matka = new KoordinaattiJono(40);
-        matka.add(new Koordinaatti(0, 2));
-        matka.add(new Koordinaatti(0, 3));
-        matka.add(new Koordinaatti(1, 3));
-        matka.add(new Koordinaatti(1, 4));
-
-        ligu.setPath(matka);
-
-        Grafiikka g = new Grafiikka(r, 580, 665);
+        Grafiikka g = new Grafiikka(r, 580, 665, 10, 1);
 
 
         Paivittaja p = new Paivittaja(r);

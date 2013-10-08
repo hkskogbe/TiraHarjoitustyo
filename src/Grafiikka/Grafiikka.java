@@ -1,23 +1,26 @@
 package Grafiikka;
 
 import Klikkaaminen.Klikkaaja;
-import Ruudukko.Node;
 import Ruudukko.Ruudukko;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 public class Grafiikka implements Runnable {
-    
+
     private Ruudukko ruudukko;
     private JFrame frame;
     private int korkeus;
     private int leveys;
+    private int ruudunKoko;
+    private int valinKoko;
 
-    public Grafiikka(Ruudukko ruudukko, int korkeus, int leveys) {
+    public Grafiikka(Ruudukko ruudukko, int korkeus, int leveys, int ruudunKoko, int valinKoko) {
         this.ruudukko = ruudukko;
         this.korkeus = korkeus;
         this.leveys = leveys;
+        this.ruudunKoko = ruudunKoko;
+        this.valinKoko = valinKoko;
     }
 
     public void setRuudukko(Ruudukko ruudukko) {
@@ -52,19 +55,17 @@ public class Grafiikka implements Runnable {
         return frame;
     }
 
-    
-    
     @Override
     public void run() {
-        
+
         frame = new JFrame("Ruudukko");
         frame.setPreferredSize(new Dimension(leveys, korkeus));
-        
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
+
         frame.getContentPane().add(this.ruudukko);
-        frame.addMouseListener(new Klikkaaja(ruudukko, leveys, korkeus));
-        
+        frame.addMouseListener(new Klikkaaja(ruudukko, leveys, korkeus, ruudunKoko, valinKoko));
+
         frame.pack();
         frame.setVisible(true);
     }

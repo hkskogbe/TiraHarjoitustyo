@@ -20,7 +20,7 @@ public class Ruudukko extends JPanel {
     private Liikkuja liikkuja;
 
     /**
-     * Konstruktori ruudukolle stringin pohjalta
+     * Konstruktori ruudukolle string-muotoisen "pohjapiirroksen" pohjalta
      */
     public Ruudukko(int korkeus, int leveys, int ruudunKorkeus, int ruudunLeveys,
             int vali, Color taustavari, String ruudukkoString) {
@@ -34,7 +34,7 @@ public class Ruudukko extends JPanel {
         this.kasaaRuudukko(ruudukkoString);
 
         this.tyhjavari = Color.LIGHT_GRAY;
-        this.seinavari = Color.MAGENTA;
+        this.seinavari = Color.MAGENTA.darker().darker();
     }
 
     /**
@@ -119,14 +119,19 @@ public class Ruudukko extends JPanel {
     }
 
     /**
-     * Jos node on käveltävä, se ei ole enää. Jos se ei taas ole, siitä tulee
-     * käveltävä. :)
+     * Jos node on käveltävä, siihen tulee seinä. Muutoin poistetaan
+     * olemassaoleva seinä.
      *
      * @param y
      * @param x
      */
     public void vaihdaNodenKaveltavyys(int y, int x) {
+        //Jos klikataan itse liikkujaa, return
         if (y == liikkuja.getSijainti().getY() && x == liikkuja.getSijainti().getX()) {
+            return;
+        }
+        //Jos klikataan liikkujan kohdetta, return
+        if (y == liikkuja.getKohde().getY() && x == liikkuja.getKohde().getX()) {
             return;
         }
 
@@ -170,7 +175,7 @@ public class Ruudukko extends JPanel {
     }
 
     private void piirraLiikkujanPolku(Graphics graphics) {
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(liikkuja.getPolunvari());
 
 
         for (Koordinaatti k : liikkuja.getPath().getKoordinaatit()) {

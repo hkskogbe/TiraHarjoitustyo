@@ -34,6 +34,9 @@ public class Node {
     public boolean isClosed() {
         return closed;
     }
+    public void setOpen(){
+        this.open=true;
+    }
 
     public boolean isOpen() {
         return open;

@@ -30,7 +30,8 @@ public class NodeHeap {
             nodet[i] = nodet[parent(i)];
             i = parent(i);
         }
-        nodet[i] = node;
+            nodet[i] = node;
+            node.setOpen();
     }
 
     public Node min() {

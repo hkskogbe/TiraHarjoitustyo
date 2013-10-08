@@ -11,11 +11,15 @@ public class Klikkaaja implements MouseListener {
     private int resoluutioX;
     private int resoluutioY;
     private boolean osuureunaan;
+    private int ruudunKoko;
+    private int valinKoko;
 
-    public Klikkaaja(Ruudukko ruudukko, int resoluutioX, int resoluutioY) {
+    public Klikkaaja(Ruudukko ruudukko, int resoluutioX, int resoluutioY, int ruudunKoko, int valinKoko) {
         this.ruudukko = ruudukko;
         this.resoluutioY = resoluutioY;
         this.resoluutioX = resoluutioX;
+        this.ruudunKoko=ruudunKoko;
+        this.valinKoko=valinKoko;
     }
 
     @Override
@@ -50,17 +54,18 @@ public class Klikkaaja implements MouseListener {
         ruudukko.getLiikkuja().laskeReittiUudelleen();
     }
 
-    // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä tyhjää
+    // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä tyhjää, 
+    // tämän pohjalta x ja y arvot säädetty
     private int haeX(MouseEvent e, int ruudukonX) {
         int x = e.getX() - 3;
         int ruutuX = -1;
         while (x > ruudukonX) {
-            ruudukonX += 5;
+            ruudukonX += valinKoko;
             if (ruudukonX > x) {
                 osuureunaan = true;
                 break;
             }
-            ruudukonX += 50;
+            ruudukonX += ruudunKoko;
             ruutuX++;
         }
         return ruutuX;
@@ -70,12 +75,12 @@ public class Klikkaaja implements MouseListener {
         int y = e.getY() - 22;
         int ruutuY = -1;
         while (y > ruudukonY) {
-            ruudukonY += 5;
+            ruudukonY += valinKoko;
             if (ruudukonY > y) {
                 osuureunaan = true;
                 break;
             }
-            ruudukonY += 50;
+            ruudukonY += ruudunKoko;
             ruutuY++;
         }
         return ruutuY;

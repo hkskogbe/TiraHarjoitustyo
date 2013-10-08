@@ -18,6 +18,7 @@ public class Liikkuja {
         this.sijainti = new Koordinaatti(sijaintiX, sijaintiY);
         this.polunlaskija = new Polunlaskija(this, ruudukko);
         this.kohde = null;
+        int r = vari.getRGB();
     }
 
     public void setPath(KoordinaattiJono path) {
@@ -32,6 +33,10 @@ public class Liikkuja {
         sijainti = path.Dequeue();
     }
 
+    public Koordinaatti getKohde() {
+        return kohde;
+    }
+
     public Koordinaatti getSijainti() {
         return sijainti;
     }
@@ -39,6 +44,11 @@ public class Liikkuja {
     public Color getVari() {
         return vari;
     }
+
+    public Color getPolunvari() {
+        return vari.darker().darker();
+    }
+    
 
     public KoordinaattiJono getPath() {
         return path;
