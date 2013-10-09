@@ -18,8 +18,8 @@ public class Klikkaaja implements MouseListener {
         this.ruudukko = ruudukko;
         this.resoluutioY = resoluutioY;
         this.resoluutioX = resoluutioX;
-        this.ruudunKoko=ruudunKoko;
-        this.valinKoko=valinKoko;
+        this.ruudunKoko = ruudunKoko;
+        this.valinKoko = valinKoko;
     }
 
     @Override
@@ -51,7 +51,19 @@ public class Klikkaaja implements MouseListener {
     private void shiftPress(MouseEvent e, int ruutuX, int ruutuY) {
         // Lisää/poistaa esteen
         ruudukko.vaihdaNodenKaveltavyys(ruutuY, ruutuX);
-        ruudukko.getLiikkuja().laskeReittiUudelleen();
+
+        // Jos klikkaus osuu liikkujan reitille, lasketaan uusi reitti
+
+        for (Koordinaatti k : ruudukko.getLiikkuja().getPath().getKoordinaatit()) {
+            if (k != null) {
+                if (k.getX() == ruutuX && k.getY() == ruutuY) {
+                    ruudukko.getLiikkuja().laskeReittiUudelleen();
+                    return;
+                }
+            }
+        }
+
+
     }
 
     // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä tyhjää, 

@@ -141,6 +141,9 @@ public class Ruudukko extends JPanel {
         } else {
             this.ruudukko[y][x] = true;
         }
+
+
+
     }
 
     @Override
