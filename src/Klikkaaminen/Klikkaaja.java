@@ -66,7 +66,7 @@ public class Klikkaaja implements MouseListener {
 
     }
 
-    // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä tyhjää, 
+    // omalla koneella yläreunasta 22 pixeliä ja vasemmasta 3 pixeliä, 
     // tämän pohjalta x ja y arvot säädetty
     private int haeX(MouseEvent e, int ruudukonX) {
         int x = e.getX() - 3;

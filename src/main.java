@@ -52,7 +52,7 @@ public class main {
 //        matka.add(new Koordinaatti(1, 4));
         liikkuja.setPath(matka);
 
-        Grafiikka g = new Grafiikka(r, 580, 665, 10, 1);
+        Grafiikka g = new Grafiikka(r, 581, 665, 10, 1);
 
 
         Paivittaja p = new Paivittaja(r);

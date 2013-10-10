@@ -115,6 +115,12 @@ public class Ruudukko extends JPanel {
      * @return
      */
     public boolean onSeina(int y, int x) {
+        if (y < 0 || x < 0) {
+            return true;
+        }
+        if (y >= this.korkeus || x >= this.leveys) {
+            return true;
+        }
         return this.ruudukko[y][x];
     }
 
@@ -135,6 +141,12 @@ public class Ruudukko extends JPanel {
             return;
         }
 
+        if (y < 0 || x < 0) {
+            return;
+        }
+        if (y > this.korkeus || x > this.leveys) {
+            return;
+        }
 
         if (this.ruudukko[y][x]) {
             this.ruudukko[y][x] = false;

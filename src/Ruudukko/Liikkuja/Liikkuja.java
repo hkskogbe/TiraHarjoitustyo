@@ -17,8 +17,7 @@ public class Liikkuja {
         this.vari = vari;
         this.sijainti = new Koordinaatti(sijaintiX, sijaintiY);
         this.polunlaskija = new Polunlaskija(this, ruudukko);
-        this.kohde = null;
-        int r = vari.getRGB();
+        this.kohde = sijainti;
     }
 
     public void setPath(KoordinaattiJono path) {

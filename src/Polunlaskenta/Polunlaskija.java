@@ -34,7 +34,7 @@ public class Polunlaskija {
         }
 
         this.kohde = kohde;
-        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus() + 1) * (ruudukko.getRuudukonLeveys() + 1), kohde);
+        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus()) * (ruudukko.getRuudukonLeveys()), kohde);
 
         // Laitetaan liikkujan alkunode opensettiin
         openset.insert(nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()]);
