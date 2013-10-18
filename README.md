@@ -1,4 +1,4 @@
-Tietorakenteiden ja algoritmien harjoitustyö
+Harjoitustyö: Tietorakenteet ja algoritmit
 ================
 
 README
@@ -13,10 +13,10 @@ Ruudukossa harmaat neliöt ovat tausta, violetti on seinää (jonka läpi ei voi
 
 Alla ohjeet liikkujan ohjaamiseen ruudukossa
 
-Hiiren vasen painike:
+Hiiren vasen painike
 Asettaa liikkujalle kohteen ruudukossa, minkä seurauksena liikkujalle lasketaan uusi polku. Kohdetta ei voi asettaa violetin värisille neliöille (eli seinille).
 
-Shift ja hiiren vasen painike:
+Shift ja hiiren vasen painike
 Lisää tai poistaa seinän kyseistä kohdasta. Seinän voi asettaa liikkujan polulle, tällöin liikkujalle lasketaan uusi polku.
 
 Tämän lisäksi projektini sisältää polunetsimisalgoritmille testejä, joita voi suorittaa esimerkiksi NetBeansin kautta.
