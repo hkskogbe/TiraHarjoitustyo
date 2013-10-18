@@ -2,6 +2,11 @@ package Tietorakenteita;
 
 import Ruudukko.Liikkuja.Koordinaatti;
 
+/**
+ * KoordinaattiPino on Koordinaatti-luokan olioita säilyttävä pino-tietorakenne.
+ * Luokka on tehty pääasiassa kevään 2013 Tietorakenteet ja algoritmit -kurssin
+ * materiaalin pohjalta.
+ */
 public class KoordinaattiPino {
 
     private Koordinaatti[] taulukko;

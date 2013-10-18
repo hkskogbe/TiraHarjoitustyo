@@ -33,16 +33,12 @@ public class Polunlaskija {
      * A*-algoritmin sovellus polun laskemiseksi liikkujalle. Algoritmin
      * toteutus mukailee wikipedia-artikkelia en.wikipedia.org/wiki/A* ja
      * käyttää siinä esitetyn pseudokoodin nimeämistä.
-     * 
+     *
      * parametri kohde on liikkujalle asetettava kohde
      */
     public void laskeAstar(Koordinaatti kohde) {
-        // Alustetaan nodet
-        for (int y = 0; y < nodet.length; y++) {
-            for (int x = 0; x < nodet[0].length; x++) {
-                nodet[y][x] = new Node(new Koordinaatti(x, y));
-            }
-        }
+
+        alustetaanNodet();
 
         this.kohde = kohde;
         this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus()) * (ruudukko.getRuudukonLeveys()), kohde);
@@ -108,20 +104,97 @@ public class Polunlaskija {
 
     }
 
+    /**
+     * Testaamista varten polunlaskennan nodejen alustaminen on erotettu
+     * metodista
+     */
+    public boolean laskeAstarTesti(Koordinaatti kohde) {
+        // Oletetaan nodejen olevan alustettu
+
+        this.kohde = kohde;
+        this.openset = new NodeHeap((ruudukko.getRuudukonKorkeus()) * (ruudukko.getRuudukonLeveys()), kohde);
+
+        // Laitetaan liikkujan alkunode opensettiin
+        openset.insert(nodet[liikkuja.getSijainti().getY()][liikkuja.getSijainti().getX()]);
+
+        Node current = null;
+
+        while (!openset.isEmpty()) {
+
+            current = openset.delMin();
+
+            // Jos current == kohde rakennetaan polku ja lopetetaan while-loop
+            if (current == nodet[kohde.getY()][kohde.getX()]) {
+                return true;
+            }
+
+            current.setClosed();
+
+            // Tarkastellaan currentin naapurinodeja
+
+            Node naapuri;
+
+            int currentY = current.getKoordinaatti().getY();
+            int currentX = current.getKoordinaatti().getX();
+
+            //ylös
+            if (currentY > 0) {
+                if (!ruudukko.onSeina(currentY - 1, currentX)) {
+                    naapuri = nodet[currentY - 1][currentX];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+            //oikea
+            if (currentX < this.ruudukko.getRuudukonLeveys() - 1) {
+                if (!ruudukko.onSeina(currentY, currentX + 1)) {
+                    naapuri = nodet[currentY][currentX + 1];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+            //alas
+            if (currentY < this.ruudukko.getRuudukonKorkeus() - 1) {
+                if (!ruudukko.onSeina(currentY + 1, currentX)) {
+                    naapuri = nodet[currentY + 1][currentX];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+            //vasen
+            if (currentX > 0) {
+                if (!ruudukko.onSeina(currentY, currentX - 1)) {
+                    naapuri = nodet[currentY][currentX - 1];
+                    this.tarkasteleNaapuria(naapuri, current);
+                }
+            }
+
+
+        }
+        // Jos päästään tähän niin kohdetta ei voi asettaa
+        // Pysäytetään liikkuja
+        return false;
+    }
+
     private void tarkasteleNaapuria(Node naapuri, Node current) {
         int alustavaGScore = current.getgScore() + this.naapurienEtaisyys;
 
-        if (naapuri.isClosed() && alustavaGScore >= naapuri.getgScore()) {
-            // Naapuria ei käsitellä
-        } else {
-            naapuri.setParent(current.getKoordinaatti());
-            naapuri.setgScore(alustavaGScore);
-            if (!naapuri.isOpen()) {
-                openset.insert(naapuri);
-            }
+        if (naapuri.isClosed()) {
+            return;
+        }
+        if (alustavaGScore >= naapuri.getgScore()) {
+            return;
+        }
+
+        naapuri.setParent(current.getKoordinaatti());
+        naapuri.setgScore(alustavaGScore);
+        if (!naapuri.isOpen()) {
+            openset.insert(naapuri);
         }
     }
 
+    /**
+     * Metodi polun laskemiseksi sen pohjalta, että jokainen Node tietää
+     * parent-nodensa. Metodi käyttää KoordinaattiPino-luokkaa polun
+     * kääntämiseksi Liikkujalle ymmärrettävään muotoon.
+     */
     private void rakennaPolku() {
         int polunPituus = 1;
         Koordinaatti vika = kohde;
@@ -176,5 +249,13 @@ public class Polunlaskija {
         etaisyys = Math.abs(a.getX() - b.getX()) + Math.abs(a.getY() - b.getY());
 
         return etaisyys;
+    }
+
+    public void alustetaanNodet() {
+        for (int y = 0; y < nodet.length; y++) {
+            for (int x = 0; x < nodet[0].length; x++) {
+                nodet[y][x] = new Node(new Koordinaatti(x, y));
+            }
+        }
     }
 }

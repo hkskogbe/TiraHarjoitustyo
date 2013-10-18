@@ -2,6 +2,11 @@ package Ruudukko;
 
 import Ruudukko.Liikkuja.Koordinaatti;
 
+/**
+ * Node-luokka esittää yksittäistä ruutua ruudukossa. Polunlaskija käyttää
+ * luokkaa pitämään kirjaa algoritmin kannalta nodelle ominaisista
+ * ominaisuuksista.
+ */
 public class Node {
 
     private Koordinaatti parent;
@@ -24,6 +29,20 @@ public class Node {
         return gScore;
     }
 
+    /**
+     * Noden ominaisuudet on nimetty wikipedia-artikkelin
+     * en.wikipedia.org/wiki/A* mukaan.
+     *
+     * Boolean-arvot closed ja open merkitsevät Noden kuulumista closedsettiin
+     * tai opensettiin.
+     *
+     * G-score on Noden etäisyys lähtöpisteestä.
+     *
+     * Parent on lyhimmän reitin kautta tähän Nodeen saapuva viereinen Node.
+     *
+     * @param k osoittaa (x,y)-mallisen koordinaattiesityksen Noden sijainnista
+     * ruudukossa
+     */
     public Node(Koordinaatti k) {
         this.parent = null;
         this.koordinaatti = k;

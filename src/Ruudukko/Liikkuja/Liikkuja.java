@@ -18,6 +18,15 @@ public class Liikkuja {
         this.sijainti = new Koordinaatti(sijaintiX, sijaintiY);
         this.polunlaskija = new Polunlaskija(this, ruudukko);
         this.kohde = sijainti;
+        this.path = new KoordinaattiJono(0);
+    }
+
+    public Liikkuja(Color vari, int sijaintiX, int sijaintiY, Ruudukko ruudukko, Polunlaskija polunlaskija) {
+        this.vari = vari;
+        this.sijainti = new Koordinaatti(sijaintiX, sijaintiY);
+        this.polunlaskija = polunlaskija;
+        this.kohde = sijainti;
+        this.path = new KoordinaattiJono(0);
     }
 
     public void setPath(KoordinaattiJono path) {
@@ -47,7 +56,6 @@ public class Liikkuja {
     public Color getPolunvari() {
         return vari.darker().darker();
     }
-    
 
     public KoordinaattiJono getPath() {
         return path;

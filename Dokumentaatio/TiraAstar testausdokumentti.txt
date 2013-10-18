@@ -1,0 +1,20 @@
+Tietorakenteiden harjoitustyö
+Heikki Skogberg
+A*-algoritmi ja polun etsintä verkossa
+
+Testausdokumentti
+
+Ohjelmani testipakkauksessa on luokka AikaTest.java, jossa testataan 100x100, 1000x1000 ja 3000x3000 kokoisilla taulukoilla Polunlaskija-luokan laskeAstar-metodin toimintaa.
+Testejä varten Polunlaskija-luokkaan on luotu erillinen metodi, jotta nodet voidaan alustaa ennen varsinaisen algoritmin toteutuksen ajamista.
+Metodi myös palauttaa tiedon, löytyykö polku.
+
+Testeissä Liikkuja asetettiin koordinaatteihin (0,0) ja annettiin kohteeksi ruudukon vastakkainen kulma.
+Testit testaavat ainoastaan polun löytämisen verkossa, eli testien käyttämään aikaan ei sisälly esimerkiksi nodejen alustaminen tai polun rakentaminen.
+
+Pientä (100x100), isoa (1000x1000) ja isointa (3000x3000) ruudukkoa testattiin tyhjinä.
+Ruudukkoja testattiin myös sattumanvaraisesti lisätyillä esteillä.
+Sattumanvaraisissa testisyötteissä tulee huomata, että mikäli polkua ei ole mahdollista löytää, saattaa polunetsintään kulunut aika olla hyvin lyhyt.
+Tuloksista kuitenkin on huomattavissa, että täytetyllä ruudukolla polunetsintään käytetty aika on keskimäärin huomattavasti suurempaa luokkaa.
+
+Testeissä ei ole 3000x3000 suurempaa taulukkoa, sillä 10000x10000 taulukko aiheutti testatessa ERROR: Java heap space -virheen.
+

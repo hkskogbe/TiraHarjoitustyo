@@ -5,7 +5,8 @@ import Ruudukko.Node;
 
 /**
  * Minimikekototeutus A*-algoritmin Opensettiä varten. Pitää nodet
- * järjestyksessä pienimmän etäisyysarvion mukaan.
+ * järjestyksessä pienimmän etäisyysarvion mukaan. Luokka on tehty pääasiassa
+ * kevään 2013 Tietorakenteet ja algoritmit -kurssin materiaalin pohjalta.
  */
 public class NodeHeap {
 

@@ -2,6 +2,11 @@ package Tietorakenteita;
 
 import Ruudukko.Liikkuja.Koordinaatti;
 
+/**
+ * KoordinaattiJono on Koordinaatti-luokan olioita säilyttävä jono-tietorakenne.
+ * Luokka on tehty pääasiassa kevään 2013 Tietorakenteet ja algoritmit -kurssin
+ * materiaalin pohjalta.
+ */
 public class KoordinaattiJono {
 
     private Koordinaatti[] taulukko;
@@ -33,7 +38,7 @@ public class KoordinaattiJono {
         }
 
         Koordinaatti palautettava = this.taulukko[jononAlkupaa];
-        this.taulukko[jononAlkupaa]=null;
+        this.taulukko[jononAlkupaa] = null;
 
         jononAlkupaa++;
         if (jononAlkupaa > taulukko.length) {
@@ -59,7 +64,7 @@ public class KoordinaattiJono {
     public Koordinaatti[] getKoordinaatit() {
         return this.taulukko;
     }
-    
+
     public void tyhjenna() {
         this.taulukko = new Koordinaatti[taulukko.length];
         this.jononAlkupaa = 0;

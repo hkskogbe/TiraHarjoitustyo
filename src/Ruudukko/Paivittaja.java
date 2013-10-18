@@ -17,6 +17,7 @@ public class Paivittaja {
         try {
             while (true) {
                 
+                // Pysäytetään maailma millisekunteiksi kerrallaan
                 Thread.sleep(200);
                 
                 if (this.ruudukko.voiLiikkua()) {

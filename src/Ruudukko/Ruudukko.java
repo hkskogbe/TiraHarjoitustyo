@@ -6,6 +6,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
+/**
+ * Ruudukko-luokka pitää sisällään kuvauksen ohjelmassa liikkumisen pohjana
+ * olevasta ruudukosta.
+ */
 public class Ruudukko extends JPanel {
 
     private int korkeus;

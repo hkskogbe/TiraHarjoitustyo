@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+/**
+ * Grafiikka-luokka luo yksinkertaisen graafisen esityksen ohjelmalle.
+ * Pääasiassa ohjelman graafinen ilme tulee Ruudukko-luokan
+ * paintComponent-metodista.
+ */
 public class Grafiikka implements Runnable {
 
     private Ruudukko ruudukko;

@@ -1,0 +1,15 @@
+Tietorakenteiden harjoitustyö
+Heikki Skogberg
+A*-algoritmi ja polun etsintä verkossa
+
+Määrittelydokumentti
+
+Ohjelmani tarkoitus on etsiä lyhin polku verkossa käyttäen A*-algoritmia.
+Toteutuksessani käyttämä verkko koostuu neliönmallisista ruuduista, joista liikkua pystyy ylös, alas, oikeaan ja vasempaan suuntaan.
+Tästä johtuen A*-algoritmin kustannusarvio toteutetaan laskemalla kahden ruudun välinen Manhattan-etäisyys.
+
+Algoritmi suorittaa polun etsimisen ajassa O(|E|) ja tilassa O(|V|)
+
+Lähteenä työssä on käytetty pääasiassa wikipedia-artikkelia http://en.wikipedia.org/wiki/A* sekä kevään 2013 Tietorakenteet ja algoritmit -kurssin materiaalia.
+
+Työni käyttää wikipedia-artikkelin pseudokoodin termistöä.

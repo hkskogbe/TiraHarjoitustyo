@@ -1,0 +1,22 @@
+Tietorakenteiden harjoitustyö
+Heikki Skogberg
+A*-algoritmi ja polun etsintä verkossa
+
+Toteutusdokumentti
+
+Käyttämäni heuristiikkafunktio (Manhattan-etäisyys) lasketaan vakioajassa.
+
+Toteutuksessani Node-luokan oliot esittävät verkon solmuja.
+Nodella on tieto etäisyydestä aloitussolmuun, minkä lisäksi solmun kuuluminen algoritmissa käytettyyn opensettiin tai closedsettiin on talletettu booleanina Nodeen.
+Algoritmin vaatimista set-tietorakenteista ainoastaan openset on toteutettu käyttämällä erillistä tietorakennetta.
+
+Opensetin toteutus on suoritettu käyttäen minimikekoa, jossa Node-luokan esiintymät on järjestetty pienimmän etäisyysarvion (koodissa käytetty termiä f-score, wikipedia-artikkelin mukaan) kohdesolmuun mukaan.
+Minimikeko on toteutettu Tietorakenteita/NodeHeap -luokassa.
+
+Koska minimikeosta käsiteltäväksi solmuksi saadaan aina parhaimman arvion omaava solmu, joutuu ohjelma käsittelemään ainoastaan harvinaisessa pahimmassa tapauksessa verkon kaikki solmut, ja siten jokaisen solmusta naapuriin lähtevän kaaren, siis ohjelman aikavaativuus on luokkaa O(|E|).
+
+Ohjelman pahimman tapauksen tilavaativuus on luokkaa O(|V|), mikä saavutetaan, sillä käyttämäni tietorakenteet luodaan pahimman tapauksen mukaisesti muuttumattomankokoisiksi solmujen yhteen lasketun määrän suuruisiksi.
+
+Käytettyä tilaa voitaisiin kuitenkin parantaa käyttämällä esimerkiksi kasvavia taulukoita minimikeon toteutuksessa. Tällöin myös säästettäisiin aikaa nodeja alustettaessa.
+
+Ohjelman graafisessa toteutuksessa on huomautettavaa hiirellä klikkaamisen epätarkkuus joillakin tietokoneilla. Ohjelmaa on testattu toimivasti Xubuntu 12.04 ja Windows 7 -ympäristöissä, mutta kuitenkin laitoksen Ubuntu-asennuksessa klikkauksessa oli heittoa y-suunnassa. Tämä johtunee ohjelman nopeasti kasaan laitetusta graafisesta puolesta.
