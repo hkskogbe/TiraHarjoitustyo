@@ -73,6 +73,6 @@ public class Liikkuja {
     }
 
     private void laskeReitti(Koordinaatti k) {
-        this.polunlaskija.asetaKohdeAstar(k);
+        this.polunlaskija.laskeAstar(k);
     }
 }

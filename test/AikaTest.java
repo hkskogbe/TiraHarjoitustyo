@@ -17,11 +17,13 @@ import static org.junit.Assert.*;
  *
  * @author hkskogbe
  */
-public class NodeHeapTest {
+public class AikaTest {
 
-    public NodeHeapTest() {
+    public AikaTest() {
     }
 
+    
+    
     @BeforeClass
     public static void setUpClass() {
     }

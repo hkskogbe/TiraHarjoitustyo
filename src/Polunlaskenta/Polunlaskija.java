@@ -8,6 +8,10 @@ import Tietorakenteita.KoordinaattiJono;
 import Tietorakenteita.KoordinaattiPino;
 import Tietorakenteita.NodeHeap;
 
+/**
+ * Luokka, jossa algoritmin polunlaskenta toteutetaan. Polunlaskijalle kuuluu
+ * Liikkuja, jolle polku lasketaan.
+ */
 public class Polunlaskija {
 
     private Liikkuja liikkuja;
@@ -25,7 +29,14 @@ public class Polunlaskija {
         this.naapurienEtaisyys = 1;
     }
 
-    public void asetaKohdeAstar(Koordinaatti kohde) {
+    /**
+     * A*-algoritmin sovellus polun laskemiseksi liikkujalle. Algoritmin
+     * toteutus mukailee wikipedia-artikkelia en.wikipedia.org/wiki/A* ja
+     * käyttää siinä esitetyn pseudokoodin nimeämistä.
+     * 
+     * parametri kohde on liikkujalle asetettava kohde
+     */
+    public void laskeAstar(Koordinaatti kohde) {
         // Alustetaan nodet
         for (int y = 0; y < nodet.length; y++) {
             for (int x = 0; x < nodet[0].length; x++) {
@@ -156,7 +167,8 @@ public class Polunlaskija {
     }
 
     /**
-     * Metodi manhattan-etäisyyden laskemiseen algoritmin etäisyysarviota varten
+     * Metodi manhattan-etäisyyden laskemiseen algoritmin etäisyysarviota h(v)
+     * varten
      */
     public int manhattanEtaisyys(Koordinaatti a, Koordinaatti b) {
         int etaisyys;

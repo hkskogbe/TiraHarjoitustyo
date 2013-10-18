@@ -3,6 +3,10 @@ package Tietorakenteita;
 import Ruudukko.Liikkuja.Koordinaatti;
 import Ruudukko.Node;
 
+/**
+ * Minimikekototeutus A*-algoritmin Opensettiä varten. Pitää nodet
+ * järjestyksessä pienimmän etäisyysarvion mukaan.
+ */
 public class NodeHeap {
 
     private Node[] nodet;
@@ -26,12 +30,12 @@ public class NodeHeap {
         heapSize++;
         int i = heapSize;
 
-        while (i > 0 && fScoreJaGScore(nodet[parent(i)]) > fScoreJaGScore(node)) {
+        while (i > 0 && fScore(nodet[parent(i)]) > fScore(node)) {
             nodet[i] = nodet[parent(i)];
             i = parent(i);
         }
-            nodet[i] = node;
-            node.setOpen();
+        nodet[i] = node;
+        node.setOpen();
     }
 
     public Node min() {
@@ -73,11 +77,11 @@ public class NodeHeap {
         }
         Node kasiteltava = nodet[i];
 
-        if (vasen != null && fScoreJaGScore(vasen) < fScoreJaGScore(kasiteltava) && fScoreJaGScore(vasen) < fScoreJaGScore(oikea)) {
+        if (vasen != null && fScore(vasen) < fScore(kasiteltava) && fScore(vasen) < fScore(oikea)) {
             nodet[i] = vasen;
             nodet[left(i)] = kasiteltava;
             heapify(left(i));
-        } else if (oikea != null && fScoreJaGScore(oikea) < fScoreJaGScore(kasiteltava)) {
+        } else if (oikea != null && fScore(oikea) < fScore(kasiteltava)) {
             nodet[i] = oikea;
             nodet[right(i)] = kasiteltava;
             heapify(right(i));
@@ -85,7 +89,10 @@ public class NodeHeap {
 
     }
 
-    private int fScoreJaGScore(Node n) {
+    /**
+     * Palauttaa etäisyysarvion Noden n ja kohteen välillä
+     */
+    private int fScore(Node n) {
         if (n == null) {
             return Integer.MAX_VALUE;
         }
@@ -94,10 +101,13 @@ public class NodeHeap {
             return Integer.MAX_VALUE;
         }
 
-        //alla fscore
+        // lisätään g-scoreen etäisyysarvio
         return this.manhattanEtaisyys(n.getKoordinaatti(), kohde) + g;
     }
 
+    /**
+     * Manhattan-etäisyys kahden solmun välillä kustannusarvion laskemiseksi
+     */
     public int manhattanEtaisyys(Koordinaatti a, Koordinaatti b) {
         int etaisyys;
 
